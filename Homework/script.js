@@ -13,7 +13,6 @@ const controls = new OrbitControls(camera, renderer.domElement);
 camera.position.set(0, 10, 20);
 controls.update();
 
-
 const grassMaterial = new THREE.MeshBasicMaterial({ color: 'green' });
 const roadMaterial = new THREE.MeshBasicMaterial({ color: 'gray' });
 
@@ -58,24 +57,23 @@ const sideBuilding2 = new THREE.Mesh(new THREE.BoxGeometry(5, 3, 9), sideBuildin
 sideBuilding2.position.set(5, 1.5, 6);
 scene.add(sideBuilding2);
 
-
+// Animated Sphere
 const sphereMaterial = new THREE.MeshBasicMaterial({ color: 'red' });
 const sphere = new THREE.Mesh(new THREE.SphereGeometry(0.5, 32, 32), sphereMaterial);
-sphere.position.set(3, 0.5, 0);
+sphere.position.set(-2 + 3, 0.5, -2);
 scene.add(sphere);
 
-
+// Animate Sphere in a Circular Path
 gsap.to(sphere.position, {
   duration: 5,
   repeat: -1,
-  ease: "linear",
-  onUpdate: () => {
-    const angle = gsap.getProperty(sphere, "progress") * Math.PI * 2;
-    sphere.position.x = Math.cos(angle) * 3;
-    sphere.position.z = Math.sin(angle) * 3;
+  ease: "none",
+  onUpdate: function () {
+    const angle = this.progress() * Math.PI * 2;
+    sphere.position.x = -2 + Math.cos(angle) * 3;
+    sphere.position.z = -2 + Math.sin(angle) * 3;
   }
 });
-
 
 function animate() {
   requestAnimationFrame(animate);
